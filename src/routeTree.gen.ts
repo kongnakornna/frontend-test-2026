@@ -9,9 +9,15 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SplatRouteImport } from './routes/$'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CodeChallengeFeatureFlagFormRouteImport } from './routes/code-challenge.feature-flag-form'
 
+const SplatRoute = SplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -26,32 +32,43 @@ const CodeChallengeFeatureFlagFormRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/$': typeof SplatRoute
   '/code-challenge/feature-flag-form': typeof CodeChallengeFeatureFlagFormRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/$': typeof SplatRoute
   '/code-challenge/feature-flag-form': typeof CodeChallengeFeatureFlagFormRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/$': typeof SplatRoute
   '/code-challenge/feature-flag-form': typeof CodeChallengeFeatureFlagFormRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/code-challenge/feature-flag-form'
+  fullPaths: '/' | '/$' | '/code-challenge/feature-flag-form'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/code-challenge/feature-flag-form'
-  id: '__root__' | '/' | '/code-challenge/feature-flag-form'
+  to: '/' | '/$' | '/code-challenge/feature-flag-form'
+  id: '__root__' | '/' | '/$' | '/code-challenge/feature-flag-form'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  SplatRoute: typeof SplatRoute
   CodeChallengeFeatureFlagFormRoute: typeof CodeChallengeFeatureFlagFormRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/$': {
+      id: '/$'
+      path: '/$'
+      fullPath: '/$'
+      preLoaderRoute: typeof SplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -71,6 +88,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  SplatRoute: SplatRoute,
   CodeChallengeFeatureFlagFormRoute: CodeChallengeFeatureFlagFormRoute,
 }
 export const routeTree = rootRouteImport

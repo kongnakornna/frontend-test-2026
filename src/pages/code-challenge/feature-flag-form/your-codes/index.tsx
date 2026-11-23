@@ -33,72 +33,74 @@ function YourCode() {
   })
 
   return (
-    <section
+    <main
       data-theme-mode={theme}
       className={cn(
         editorThemeClass(theme),
-        'rounded-2xl border border-border p-4 sm:p-6',
+        'min-h-dvh px-4 py-6 sm:px-6 lg:px-8',
       )}
     >
-      <header className="mb-6 flex flex-wrap items-start justify-between gap-4 border-b border-border pb-5">
-        <div className="min-w-0">
-          <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
-            Feature Flag Editor
-          </h1>
-          <p className="mt-2 text-muted-foreground">
-            Configure the flag. The JSON on the right updates as you type.
-          </p>
-        </div>
-        <ThemeSwitch value={theme} onChange={setTheme} />
-      </header>
-
-      <form
-        noValidate
-        onSubmit={(event) => {
-          event.preventDefault()
-          event.stopPropagation()
-          void form.handleSubmit()
-        }}
-        className="grid items-start gap-5 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]"
-      >
-        <div className="min-w-0 overflow-hidden rounded-xl border border-border bg-card text-card-foreground shadow-sm">
-          <FlagSettingsSection form={form} />
-          <VariationsSection form={form} />
-          <TargetingSection form={form} />
-          <DefaultRuleSection form={form} />
-        </div>
-
-        <aside className="min-w-0 space-y-3 xl:sticky xl:top-4">
-          <PreviewPanel form={form} theme={theme} />
-
-          <div className="flex flex-wrap items-center gap-2">
-            <form.Subscribe selector={(state) => state.isSubmitting}>
-              {(isSubmitting) => (
-                <Button type="submit" size="lg" disabled={isSubmitting}>
-                  <ShieldCheck /> Validate &amp; copy JSON
-                </Button>
-              )}
-            </form.Subscribe>
-            <Button
-              type="button"
-              variant="outline"
-              size="lg"
-              onClick={() => {
-                form.reset()
-                setSavedAt(null)
-              }}
-            >
-              <RotateCcw /> Reset
-            </Button>
-            {savedAt && (
-              <span className="flex items-center gap-1.5 text-sm text-[var(--ff-success)]">
-                <CircleCheck className="size-4" /> Valid, copied at {savedAt}
-              </span>
-            )}
+      <div className="mx-auto max-w-[1600px]">
+        <header className="mb-6 flex flex-wrap items-start justify-between gap-4 border-b border-border pb-5">
+          <div className="min-w-0">
+            <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
+              Feature Flag Editor
+            </h1>
+            <p className="mt-2 text-muted-foreground">
+              Configure the flag. The JSON on the right updates as you type.
+            </p>
           </div>
-        </aside>
-      </form>
-    </section>
+          <ThemeSwitch value={theme} onChange={setTheme} />
+        </header>
+
+        <form
+          noValidate
+          onSubmit={(event) => {
+            event.preventDefault()
+            event.stopPropagation()
+            void form.handleSubmit()
+          }}
+          className="grid items-start gap-5 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]"
+        >
+          <div className="min-w-0 overflow-hidden rounded-xl border border-border bg-card text-card-foreground shadow-sm">
+            <FlagSettingsSection form={form} />
+            <VariationsSection form={form} />
+            <TargetingSection form={form} />
+            <DefaultRuleSection form={form} />
+          </div>
+
+          <aside className="min-w-0 space-y-3 xl:sticky xl:top-4">
+            <PreviewPanel form={form} theme={theme} />
+
+            <div className="flex flex-wrap items-center gap-2">
+              <form.Subscribe selector={(state) => state.isSubmitting}>
+                {(isSubmitting) => (
+                  <Button type="submit" size="lg" disabled={isSubmitting}>
+                    <ShieldCheck /> Validate &amp; copy JSON
+                  </Button>
+                )}
+              </form.Subscribe>
+              <Button
+                type="button"
+                variant="outline"
+                size="lg"
+                onClick={() => {
+                  form.reset()
+                  setSavedAt(null)
+                }}
+              >
+                <RotateCcw /> Reset
+              </Button>
+              {savedAt && (
+                <span className="flex items-center gap-1.5 text-sm text-[var(--ff-success)]">
+                  <CircleCheck className="size-4" /> Valid, copied at {savedAt}
+                </span>
+              )}
+            </div>
+          </aside>
+        </form>
+      </div>
+    </main>
   )
 }
 

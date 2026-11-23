@@ -1,5 +1,8 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 
-import OverviewPage from '#/pages/overview'
-
-export const Route = createFileRoute('/')({ component: OverviewPage })
+/** The app has a single page: send the root URL to the editor. */
+export const Route = createFileRoute('/')({
+  beforeLoad: () => {
+    throw redirect({ to: '/code-challenge/feature-flag-form', replace: true })
+  },
+})
