@@ -1,7 +1,7 @@
-import FeatureFlagAssignment from './assignment'
+import FeatureFlagEditor from './your-codes'
 
 function FeatureFlagForm() {
-  return <FeatureFlagAssignment />
+  return <FeatureFlagEditor />
 }
 
 export default FeatureFlagForm

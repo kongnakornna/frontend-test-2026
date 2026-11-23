@@ -1,0 +1,87 @@
+/*
+ * Editor themes: Light (.ff-theme-light) and Dark/black (.ff-theme-dark).
+ * They work on their own, whatever the site-wide light/dark toggle says.
+ *
+ * Tailwind colour utilities read the --color-* aliases, which the app resolves
+ * once on :root. So each theme re-declares both the raw tokens and the aliases
+ * on the editor wrapper. The dark theme also gets the `dark` class, so that
+ * `dark:` variants apply inside it.
+ */
+
+.ff-theme-light {
+  --background: oklch(0.985 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.96 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.955 0 0);
+  --muted-foreground: oklch(0.5 0 0);
+  --accent: oklch(0.96 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.912 0 0);
+  --input: oklch(0.89 0 0);
+  --ring: oklch(0.708 0 0);
+  --ff-success: oklch(0.52 0.14 155);
+  --ff-editor-bg: #ffffff;
+
+  color-scheme: light;
+}
+
+.ff-theme-dark {
+  --background: oklch(0.11 0 0);
+  --foreground: oklch(0.97 0 0);
+  --card: oklch(0.155 0 0);
+  --card-foreground: oklch(0.97 0 0);
+  --popover: oklch(0.18 0 0);
+  --popover-foreground: oklch(0.97 0 0);
+  --primary: oklch(0.95 0 0);
+  --primary-foreground: oklch(0.15 0 0);
+  --secondary: oklch(0.23 0 0);
+  --secondary-foreground: oklch(0.97 0 0);
+  --muted: oklch(0.21 0 0);
+  --muted-foreground: oklch(0.68 0 0);
+  --accent: oklch(0.23 0 0);
+  --accent-foreground: oklch(0.97 0 0);
+  --destructive: oklch(0.7 0.19 22);
+  --border: oklch(1 0 0 / 9%);
+  --input: oklch(1 0 0 / 14%);
+  --ring: oklch(0.6 0 0);
+  --ff-success: oklch(0.79 0.16 155);
+  --ff-editor-bg: #0b0b0b;
+
+  color-scheme: dark;
+}
+
+.ff-theme-light,
+.ff-theme-dark {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  background-color: var(--background);
+  color: var(--foreground);
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
+}
