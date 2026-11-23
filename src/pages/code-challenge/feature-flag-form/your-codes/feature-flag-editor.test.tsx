@@ -134,4 +134,30 @@ describe('Feature flag editor', () => {
     })
     await waitFor(() => expect(flag().variations).toEqual({ on: 0, off: 1 }))
   })
+
+  it('switches between Light and Dark themes and remembers the choice', async () => {
+    window.localStorage.clear()
+    const { container } = render(<YourCode />)
+    const editor = container.querySelector('[data-theme-mode]') as HTMLElement
+    expect(editor.dataset.themeMode).toBe('dark')
+    expect(editor.classList.contains('dark')).toBe(true)
+
+    fireEvent.click(screen.getByRole('radio', { name: 'Light' }))
+    expect(editor.dataset.themeMode).toBe('light')
+    expect(editor.classList.contains('ff-theme-light')).toBe(true)
+    expect(editor.classList.contains('dark')).toBe(false)
+    expect(window.localStorage.getItem('feature-flag-editor:theme')).toBe(
+      'light',
+    )
+
+    // a new visit starts from the stored theme
+    cleanup()
+    const second = render(<YourCode />)
+    await waitFor(() =>
+      expect(
+        (second.container.querySelector('[data-theme-mode]') as HTMLElement)
+          .dataset.themeMode,
+      ).toBe('light'),
+    )
+  })
 })

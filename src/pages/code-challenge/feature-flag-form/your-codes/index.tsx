@@ -2,20 +2,24 @@ import { useState } from 'react'
 import { CircleCheck, RotateCcw, ShieldCheck } from 'lucide-react'
 
 import { Button } from '#/components/ui/button'
+import { cn } from '#/lib/utils'
 
 import './editor-theme.css'
 import { DefaultRuleSection } from './components/default-rule-section'
 import { FlagSettingsSection } from './components/flag-settings-section'
 import { PreviewPanel } from './components/preview-panel'
 import { TargetingSection } from './components/targeting-section'
+import { ThemeSwitch } from './components/theme-switch'
 import { VariationsSection } from './components/variations-section'
+import { editorThemeClass, useEditorTheme } from './hooks/use-editor-theme'
 import { useFlagEditorForm } from './hooks/use-flag-editor-form'
 import { toJson } from './lib/to-go-feature-flag'
 import { toFlagConfig } from './model/form-values'
 
-/** Feature Flag edit form (black theme), fields modelled on the GoFeatureFlag editor. */
+/** Feature Flag edit form with Light / Dark themes; fields modelled on the GoFeatureFlag editor. */
 function YourCode() {
   const [savedAt, setSavedAt] = useState<string | null>(null)
+  const { theme, setTheme } = useEditorTheme()
 
   const form = useFlagEditorForm({
     onValidSubmit: async (values) => {
@@ -29,14 +33,23 @@ function YourCode() {
   })
 
   return (
-    <section className="ff-black dark rounded-2xl border border-border p-4 sm:p-6">
-      <header className="mb-6 border-b border-border pb-5">
-        <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
-          Feature Flag Editor
-        </h1>
-        <p className="mt-2 text-muted-foreground">
-          Configure the flag. The JSON on the right updates as you type.
-        </p>
+    <section
+      data-theme-mode={theme}
+      className={cn(
+        editorThemeClass(theme),
+        'rounded-2xl border border-border p-4 sm:p-6',
+      )}
+    >
+      <header className="mb-6 flex flex-wrap items-start justify-between gap-4 border-b border-border pb-5">
+        <div className="min-w-0">
+          <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
+            Feature Flag Editor
+          </h1>
+          <p className="mt-2 text-muted-foreground">
+            Configure the flag. The JSON on the right updates as you type.
+          </p>
+        </div>
+        <ThemeSwitch value={theme} onChange={setTheme} />
       </header>
 
       <form
@@ -56,7 +69,7 @@ function YourCode() {
         </div>
 
         <aside className="min-w-0 space-y-3 xl:sticky xl:top-4">
-          <PreviewPanel form={form} />
+          <PreviewPanel form={form} theme={theme} />
 
           <div className="flex flex-wrap items-center gap-2">
             <form.Subscribe selector={(state) => state.isSubmitting}>
